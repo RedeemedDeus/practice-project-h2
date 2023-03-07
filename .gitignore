@@ -2,3 +2,6 @@
 *.iws
 *.iml
 *.ipr
+
+h2/*
+target/*
