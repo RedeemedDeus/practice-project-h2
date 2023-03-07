@@ -26,6 +26,7 @@ public class ShoppingController {
 
             // Item end-points
             .post("/item", this::addItem)
+            .patch("item", this::updateItem)
             .get("/item/id/{id}", this::getItemById)
 
             .get("/items", this::getAllItems)
@@ -57,6 +58,8 @@ public class ShoppingController {
 
     // Item Endpoints
     private void addItem(Context context) {
+    }
+    private void updateItem(Context context) {
     }
 
     private void getItemById(Context context) {
