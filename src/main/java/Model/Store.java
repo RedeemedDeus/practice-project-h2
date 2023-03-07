@@ -68,6 +68,23 @@ public class Store {
         this.state = state;
     }
 
+    //OVERRIDE equals METHOD TO ALLOW Assert.assertEquals and List.contains to function. (CREDIT: PEP-PROJECT)
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Store store = (Store) o;
+        return store_id == store.store_id && store_name.equals(store.store_name) && state.equals(store.state)
+                && zip == store.zip;
+    }
 
+    //OVERRIDE THE DEFAULT toString METHOD FOR EASY DEBUGGING(CREDIT: PEP-PROJECT)
+    public String toString() {
+        return "Account{" +
+                "store_id=" + store_id +
+                ", store_name='" + store_name + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                '}';
+    }
 
 }
