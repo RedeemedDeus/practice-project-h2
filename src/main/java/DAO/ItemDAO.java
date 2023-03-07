@@ -10,9 +10,9 @@ import java.util.List;
 public class ItemDAO {
 
 
-    ItemDAO(){};
+    public ItemDAO(){}
 
-    Item getItemById(int id)
+    public Item getItemById(int id)
     {
         String query = "SELECT * FROM item WHERE id = ?";
         try (Connection connection = ConnectionSingleton.getConnection();
@@ -40,7 +40,7 @@ public class ItemDAO {
      *
      * @return List<Item>
      */
-    List<Item> getAllItems()
+    public List<Item> getAllItems()
     {
         String query = "SELECT * FROM item";
         try (Connection connection = ConnectionSingleton.getConnection();
@@ -64,7 +64,7 @@ public class ItemDAO {
             throw new RuntimeException(e);
         }
     }
-    Item addNewItem(Item newItem)
+    public Item addNewItem(Item newItem)
     {
         String query = "SELECT INTO item VALUES(?, ?, ?, ?)";
         try (Connection connection = ConnectionSingleton.getConnection();
@@ -95,7 +95,7 @@ public class ItemDAO {
         }
         return null;
     }
-    Item updateItem(Item updatedItem)
+    public Item updateItem(Item updatedItem)
     {
         Item newItem = this.getItemById(updatedItem.getId());
 
@@ -103,7 +103,7 @@ public class ItemDAO {
             newItem.setName(updatedItem.getName());
         if( !updatedItem.getDescription().isEmpty() )
             newItem.setDescription(updatedItem.getDescription());
-        if (updatedItem.getPrice() != 0l)
+        if (updatedItem.getPrice() != 0L)
             newItem.setPrice(updatedItem.getPrice());
         if (updatedItem.getStoreId() != 0)
             newItem.setStoreId(updatedItem.getStoreId());
@@ -120,7 +120,6 @@ public class ItemDAO {
 
 
             int result = statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
 
             if(result > 0)
                 return newItem;
@@ -130,7 +129,7 @@ public class ItemDAO {
         }
         return null;
     }
-    Item getItemByStoreId(int id)
+    public List<Item> getItemsByStoreId(int id)
     {
         String query = "SELECT * FROM item WHERE store_id = ?";
         try (Connection connection = ConnectionSingleton.getConnection();
@@ -138,29 +137,30 @@ public class ItemDAO {
         {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next())
+            List<Item> output = new ArrayList<>();
+
+            while(resultSet.next())
             {
-                return new Item(resultSet.getString("name"),
+                output.add( new Item(resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("store_id")
-                );
+                ));
             }
+            return output;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
      * Get a list of items based on state.
-     *
      * Returns a list of items or an empty list if none are found.
-     * @param state
+     * @param state A string representing the state the store is located in
      * @return List<Item>
      */
-    List<Item> getItemsByState(String state)
+    public List<Item> getItemsByState(String state)
     {
         String query = "SELECT * FROM item INNER JOIN store ON store.id = item.store_id WHERE store.state = ?";
         try (Connection connection = ConnectionSingleton.getConnection();
@@ -187,12 +187,11 @@ public class ItemDAO {
 
     /**
      * Get a list of items based on Zip Code.
-     *
      * Returns a list of items or an empty list if non are found.
-     * @param zipCode
+     * @param zipCode An integer representing the zipCode a store is located in.
      * @return List<Item>
      */
-    List<Item> getItemsByZip(int zipCode)
+    public List<Item> getItemsByZip(int zipCode)
     {
         String query = "SELECT * FROM item INNER JOIN store ON store.id = item.store_id WHERE store.zipcode = ?";
         try (Connection connection = ConnectionSingleton.getConnection();
