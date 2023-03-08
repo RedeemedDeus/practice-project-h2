@@ -1,8 +1,11 @@
 package Model;
 
+import java.util.Objects;
+
 public class Item {
     private int id;
     private String name;
+
     private String description;
     private double price;
     private int storeId;
@@ -20,6 +23,10 @@ public class Item {
         this.description = description;
         this.price = price;
         this.storeId = storeId;
+    }
+
+    public Item() {
+
     }
 
     public int getId() {
@@ -60,5 +67,29 @@ public class Item {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id && Double.compare(item.price, price) == 0 && storeId == item.storeId && Objects.equals(name, item.name) && Objects.equals(description, item.description);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", storeId=" + storeId +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, storeId);
     }
 }
