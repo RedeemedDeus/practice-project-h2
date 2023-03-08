@@ -20,6 +20,11 @@ public class Store {
 
     }
 
+    //THE DATABASE GENERATES THE store_id, so we need a constructor without store_id
+    public Store(String store_name, String state, int zip){
+
+    }
+
     //FULL ARGS CONSTRUCTOR
     public Store(int store_id, String store_name, String state, int zip){
         this.store_id = store_id;
