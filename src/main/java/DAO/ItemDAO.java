@@ -25,7 +25,8 @@ public class ItemDAO {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next())
             {
-                return new Item(resultSet.getString("name"),
+                return new Item(id,
+                                resultSet.getString("name"),
                                 resultSet.getString("description"),
                                 resultSet.getDouble("price"),
                                 resultSet.getInt("store_id")

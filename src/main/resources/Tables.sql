@@ -14,9 +14,10 @@ CREATE TABLE store(
 
 DROP TABLE IF EXISTS item;
 
+-- NOTE: the primary key is a composite key, each store can have a similar item but at a different price, etc
 -- TODO: make item.store_id reference store.store_id, removed for testing
 CREATE TABLE IF NOT EXISTS item (
-    id SERIAL PRIMARY KEY,
+    id SERIAL,
     name VARCHAR(255),
     description VARCHAR(1024),
     price DECIMAL(10,2),

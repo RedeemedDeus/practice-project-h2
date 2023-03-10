@@ -17,7 +17,7 @@ public class ShoppingController {
     private final StoreService storeService;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    ShoppingController()
+    public ShoppingController()
     {
         this.itemService = new ItemService();
         this.storeService = new StoreService();
