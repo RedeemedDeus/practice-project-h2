@@ -8,7 +8,7 @@ CREATE TABLE store(
     store_name varchar(255),
     state varchar(255),
     zip int
-
+);
 
 -- Item Table
 
