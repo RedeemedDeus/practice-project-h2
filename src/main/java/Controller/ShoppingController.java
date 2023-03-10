@@ -56,7 +56,6 @@ public class ShoppingController {
 
 
     // Store Endpoints
-
     /**
      * addStore endpoint handler
      * @param context
