@@ -95,8 +95,9 @@ public class StoreDAO {
     /**
      * GET A STORE BY ITS state
      */
-    public Store getStoreByState(String state){
+    public List<Store> getStoreByState(String state){
         Connection connection = ConnectionSingleton.getConnection();
+        List<Store> stores = new ArrayList<>();
         try{
             String sql = "SELECT * FROM store WHERE state = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -108,21 +109,22 @@ public class StoreDAO {
                 Store store = new Store(rs.getInt("store_id"), rs.getString("store_name"),
                         rs.getString("state"), rs.getInt("zip"));
 
-                return store;
+                stores.add(store);
             }
         }
         catch(SQLException e){
             System.out.println(e);
         }
 
-        return null;
+        return stores;
     }
 
     /**
      * GET A STORE BY ITS zip
      */
-    public Store getStoreByZip(int zip){
+    public List<Store> getStoreByZip(int zip){
         Connection connection = ConnectionSingleton.getConnection();
+        List<Store> stores = new ArrayList<>();
         try{
             String sql = "SELECT * FROM store WHERE zip = ?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -134,13 +136,13 @@ public class StoreDAO {
                 Store store = new Store(rs.getInt("store_id"), rs.getString("store_name"),
                         rs.getString("state"), rs.getInt("zip"));
 
-                return store;
+                stores.add(store);
             }
         }
         catch(SQLException e){
             System.out.println(e);
         }
 
-        return null;
+        return stores;
     }
 }
