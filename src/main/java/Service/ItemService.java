@@ -15,38 +15,51 @@ public class ItemService {
     {
         this.itemDAO = itemDAO;
     }
-
-    Item getItemById(Item item)
+    public Item getItemById(int itemId)
+    {
+        Item item = new Item();
+        item.setId(itemId);
+        return this.getItemById(item);
+    }
+    public Item getItemById(Item item)
     {
         return this.itemDAO.getItemById(item.getId());
     }
 
-    List<Item> getAllItems()
+    public List<Item> getAllItems()
     {
         return this.itemDAO.getAllItems();
     }
 
-    Item addNewItem(Item item)
+    public Item addNewItem(Item item)
     {
+        if(item.getName().isEmpty()
+            || item.getDescription().isEmpty()
+            || item.getPrice() == 0L
+            || item.getStoreId() == 0
+        ){
+            return null;
+        }
+
         return this.itemDAO.addNewItem(item);
     }
 
-    Item updateItem(Item item)
+    public Item updateItem(Item item)
     {
         return this.itemDAO.updateItem(item);
     }
 
-    List<Item> getItemsByStoreId(int id)
+    public List<Item> getItemsByStoreId(int id)
     {
         return this.itemDAO.getItemsByStoreId(id);
     }
 
-    List<Item> getItemsByState(String state)
+    public List<Item> getItemsByState(String state)
     {
         return this.itemDAO.getItemsByState(state);
     }
 
-    List<Item> getItemsByZip(int zipCode)
+    public List<Item> getItemsByZip(int zipCode)
     {
         return this.itemDAO.getItemsByZip(zipCode);
     }

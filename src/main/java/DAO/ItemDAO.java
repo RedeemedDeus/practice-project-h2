@@ -15,9 +15,12 @@ public class ItemDAO {
     public Item getItemById(int id)
     {
         String query = "SELECT * FROM item WHERE id = ?";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))
+
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next())
@@ -43,16 +46,20 @@ public class ItemDAO {
     public List<Item> getAllItems()
     {
         String query = "SELECT * FROM item";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             Statement statement = connection.createStatement())
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            Statement statement = connection.createStatement();
+
             ResultSet resultSet = statement.executeQuery(query);
 
             List<Item> output = new ArrayList<>();
 
             while(resultSet.next())
             {
-                output.add( new Item(resultSet.getString("name"),
+                output.add( new Item(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
                             resultSet.getString("description"),
                             resultSet.getDouble("price"),
                             resultSet.getInt("store_id")
@@ -66,10 +73,12 @@ public class ItemDAO {
     }
     public Item addNewItem(Item newItem)
     {
-        String query = "SELECT INTO item VALUES(?, ?, ?, ?)";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))
+        String query = "INSERT INTO item (name, description, price, store_id) VALUES(?, ?, ?, ?)";
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
             statement.setString(1, newItem.getName());
             statement.setString(2, newItem.getDescription());
             statement.setDouble(3, newItem.getPrice());
@@ -81,12 +90,14 @@ public class ItemDAO {
 
             if(resultSet.next())
             {
+                int key = resultSet.getInt(1);
+
                 return new Item(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("price"),
-                        resultSet.getInt("store_id")
+                        key,
+                        newItem.getName(),
+                        newItem.getDescription(),
+                        newItem.getPrice(),
+                        newItem.getStoreId()
                 );
             }
 
@@ -98,21 +109,25 @@ public class ItemDAO {
     public Item updateItem(Item updatedItem)
     {
         Item newItem = this.getItemById(updatedItem.getId());
+        if(newItem == null)
+            return null;
 
-        if( !updatedItem.getName().isEmpty() )
+        if( updatedItem.getName() != null && !updatedItem.getName().isEmpty() )
             newItem.setName(updatedItem.getName());
-        if( !updatedItem.getDescription().isEmpty() )
+        if( updatedItem.getDescription() != null &&  !updatedItem.getDescription().isEmpty() )
             newItem.setDescription(updatedItem.getDescription());
         if (updatedItem.getPrice() != 0L)
             newItem.setPrice(updatedItem.getPrice());
         if (updatedItem.getStoreId() != 0)
             newItem.setStoreId(updatedItem.getStoreId());
 
-        String query = "UPDATE item SET name = ?, description = ?, price = ?, store_di = ?";
+        String query = "UPDATE item SET name = ?, description = ?, price = ?, store_id = ?";
 
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
             statement.setString(1, newItem.getName());
             statement.setString(2, newItem.getDescription());
             statement.setDouble(3, newItem.getPrice());
@@ -132,9 +147,11 @@ public class ItemDAO {
     public List<Item> getItemsByStoreId(int id)
     {
         String query = "SELECT * FROM item WHERE store_id = ?";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             List<Item> output = new ArrayList<>();
@@ -162,10 +179,12 @@ public class ItemDAO {
      */
     public List<Item> getItemsByState(String state)
     {
-        String query = "SELECT * FROM item INNER JOIN store ON store.id = item.store_id WHERE store.state = ?";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))
+        String query = "SELECT * FROM item INNER JOIN store ON store.store_id = item.store_id WHERE store.state = ?";
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
             statement.setString(1, state);
             ResultSet resultSet = statement.executeQuery();
             List<Item> output = new ArrayList<>();
@@ -193,10 +212,12 @@ public class ItemDAO {
      */
     public List<Item> getItemsByZip(int zipCode)
     {
-        String query = "SELECT * FROM item INNER JOIN store ON store.id = item.store_id WHERE store.zipcode = ?";
-        try (Connection connection = ConnectionSingleton.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query))
+        String query = "SELECT * FROM item INNER JOIN store ON store.store_id = item.store_id WHERE store.zip = ?";
+        try
         {
+            Connection connection = ConnectionSingleton.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
             statement.setInt(1, zipCode);
             ResultSet resultSet = statement.executeQuery();
             List<Item> output = new ArrayList<>();
