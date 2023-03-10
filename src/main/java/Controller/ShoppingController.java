@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Item;
+import Model.Store;
 import Service.ItemService;
 import Service.StoreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,20 +56,77 @@ public class ShoppingController {
 
 
     // Store Endpoints
-    private void addStore(Context context) {
+
+    /**
+     * addStore endpoint handler
+     * @param context
+     * @throws JsonProcessingException
+     */
+    private void addStore(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Store store = mapper.readValue(context.body(), Store.class);
+        Store addedStore = storeService.insertStore(store);
+
+        if(addedStore == null){
+            context.status(400);
+        }
+        else{
+            context.json(mapper.writeValueAsString(addedStore));
+        }
     }
 
+    /**
+     * getStoreById endpoint handler
+     * @param context
+     */
     private void getStoreById(Context context) {
+        Store store = storeService.getStoreById(Integer.parseInt(context.pathParam("id")));
+
+        if(store != null){
+            context.json(store);
+        }
     }
 
+    /**
+     * getAllStores endpoint handler
+     * @param context
+     */
     private void getAllStores(Context context) {
+        List<Store> stores = storeService.getAllStores();
+
+        if(stores != null){
+            context.json(stores);
+        }
+
     }
 
+    /**
+     * getStoresByZip endpoint handler
+     * @param context
+     */
     private void getStoresByZip(Context context) {
+        List<Store> stores = storeService.getStoreByZip(Integer.parseInt(context.pathParam("zipCode")));
+
+        if(stores != null){
+            context.json(stores);
+        }
+
     }
 
+    /**
+     * getStoresByState endpoint handler
+     * @param context
+     */
     private void getStoresByState(Context context) {
+        List<Store> stores = storeService.getStoreByState(context.pathParam("state"));
+
+        if(stores != null){
+            context.json(stores);
+        }
+
     }
+
+
 
 
     // Item Endpoints

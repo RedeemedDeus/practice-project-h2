@@ -20,5 +20,6 @@ CREATE TABLE IF NOT EXISTS item (
     name VARCHAR(255),
     description VARCHAR(1024),
     price DECIMAL(10,2),
-    store_id INTEGER NOT NULL
+    store_id INTEGER NOT NULL,
+    foreign key (store_id) references  store(store_id)
 );

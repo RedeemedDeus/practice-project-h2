@@ -53,22 +53,22 @@ public class StoreService {
     }
 
     /**
-     * GET A STORE BY ITS state
+     * GET ALL STORES BY ITS state
      */
-    public Store getStoreByState(String state){
-        Store storeFromDb = this.storeDAO.getStoreByState(state);
+    public List<Store> getStoreByState(String state){
+        List<Store> storesbystate = this.storeDAO.getStoreByState(state);
 
-        if(storeFromDb == null) return null;
-        return storeFromDb;
+        if(storesbystate == null) return null;
+        return storesbystate;
     }
 
     /**
-     * GET A STORE BY ITS zip
+     * GET ALL STORES BY ITS zip
      */
-    public Store getStoreByZip(int zip){
-        Store storeFromDb = this.storeDAO.getStoreByZip(zip);
+    public List<Store> getStoreByZip(int zip){
+        List<Store> storesByZip = this.storeDAO.getStoreByZip(zip);
 
-        if(storeFromDb == null) return null;
-        return storeFromDb;
+        if(storesByZip == null) return null;
+        return storesByZip;
     }
 }
