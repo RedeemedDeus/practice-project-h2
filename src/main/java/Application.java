@@ -7,7 +7,7 @@ public class Application {
 //        if not, you'll get a stack trace
         //ConnectionSingleton.getConnection();
         ShoppingController controller = new ShoppingController();
-        controller.start(9090);
+        controller.start();
 
     }
 }
