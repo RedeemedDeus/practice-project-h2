@@ -2,7 +2,6 @@
 --first, drop your tables (to reset your database for testing)
 --then create your tables
 DROP TABLE IF EXISTS item;
-
 DROP TABLE IF EXISTS store;
 
 CREATE TABLE store(
