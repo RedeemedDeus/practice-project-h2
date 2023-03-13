@@ -159,7 +159,9 @@ public class ItemDAO {
 
             while(resultSet.next())
             {
-                output.add( new Item(resultSet.getString("name"),
+                output.add( new Item(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("store_id")
@@ -192,7 +194,9 @@ public class ItemDAO {
 
             while(resultSet.next())
             {
-                output.add( new Item(resultSet.getString("name"),
+                output.add( new Item(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("store_id")
@@ -225,7 +229,9 @@ public class ItemDAO {
 
             while(resultSet.next())
             {
-                output.add( new Item(resultSet.getString("name"),
+                output.add( new Item(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("store_id")
