@@ -1,6 +1,7 @@
 --h2 is typically used to setup a test database, not a prod database.
 --first, drop your tables (to reset your database for testing)
 --then create your tables
+DROP TABLE IF EXISTS item;
 DROP TABLE IF EXISTS store;
 
 CREATE TABLE store(
@@ -12,7 +13,7 @@ CREATE TABLE store(
 
 -- Item Table
 
-DROP TABLE IF EXISTS item;
+
 
 -- NOTE: the primary key is a composite key, each store can have a similar item but at a different price, etc
 -- TODO: make item.store_id reference store.store_id, removed for testing

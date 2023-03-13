@@ -22,7 +22,9 @@ public class Store {
 
     //THE DATABASE GENERATES THE store_id, so we need a constructor without store_id
     public Store(String store_name, String state, int zip){
-
+        this.store_name = store_name;
+        this.state = state;
+        this.zip = zip;
     }
 
     //FULL ARGS CONSTRUCTOR
