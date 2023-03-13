@@ -26,7 +26,7 @@ public class StoreService {
 //        Store storeFromDb = this.storeDAO.getStoreById(store.getStore_id());
 
         //THE NAME STORE NAME, STATE CANNOT BE EMPTY, ZIP HAS TO BE >= 5 (AS IS NORM IN THE US)
-        if(store.getStore_name() == "" || store.getState() == "" || store.getZip() < 5) return null;
+        if(store.getStore_name().isEmpty() || store.getState().isEmpty() || String.valueOf(store.getZip()).length() < 5) return null;
 //        else if(storeFromDb != null) return null;
 
         return this.storeDAO.insertStore(store);

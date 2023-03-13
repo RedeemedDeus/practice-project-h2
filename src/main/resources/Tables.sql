@@ -14,7 +14,6 @@ CREATE TABLE store(
 -- Item Table
 
 
-
 -- NOTE: the primary key is a composite key, each store can have a similar item but at a different price, etc
 -- TODO: make item.store_id reference store.store_id, removed for testing
 CREATE TABLE IF NOT EXISTS item (
@@ -23,6 +22,6 @@ CREATE TABLE IF NOT EXISTS item (
     description VARCHAR(1024),
     price DECIMAL(10,2),
     store_id INTEGER NOT NULL,
-    foreign key (store_id) references  store(store_id),
+    foreign key (store_id) references store(store_id),
     PRIMARY KEY (id, store_id)
 );
