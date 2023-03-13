@@ -6,6 +6,7 @@ import Service.ItemService;
 import Service.StoreService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParser.Feature;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -62,7 +63,7 @@ public class ShoppingController {
      * @throws JsonProcessingException
      */
     private void addStore(Context context) throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();
+//        ObjectMapper mapper = new ObjectMapper();
         Store store = mapper.readValue(context.body(), Store.class);
         Store addedStore = storeService.insertStore(store);
 
