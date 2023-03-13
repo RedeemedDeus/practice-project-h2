@@ -1,6 +1,8 @@
 package Controller;
 
 import Model.Item;
+import Model.Store;
+import Service.StoreService;
 import Util.ConnectionSingleton;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +44,14 @@ class ShoppingControllerTest {
      */
     @Test
     public void controller_addItem_test() throws IOException, InterruptedException {
+
+        // add the store
+
+        Store store = new Store("name", "state", 12434);
+        StoreService storeService = new StoreService();
+        Store returnedStore = storeService.insertStore(store);
+        int storeId = returnedStore.store_id;
+
         String url = "http://localhost:"+PORT+"/item";
 
         HttpClient webClient = HttpClient.newHttpClient();
@@ -50,7 +60,7 @@ class ShoppingControllerTest {
                 "Product1",
                 "Description of product1",
                 10.00,
-                1
+                storeId
         );
 
         String newItemJson = mapper.writeValueAsString(newItem);
@@ -72,6 +82,7 @@ class ShoppingControllerTest {
      */
     @Test
     public void controller_getItemById_test() throws IOException, InterruptedException {
+
         controller_addItem_test();
 
         String url = "http://localhost:"+PORT+"/item/id/1";
